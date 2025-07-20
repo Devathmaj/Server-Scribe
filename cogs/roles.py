@@ -42,10 +42,10 @@ class Roles(commands.Cog):
             return ctx.author.id == ctx.guild.owner_id
         return commands.check(predicate)
 
-    @commands.group(invoke_without_command=True)
+    @commands.hybrid_group(invoke_without_command=True)
     async def role(self, ctx):
         """Manage roles and permissions."""
-        await ctx.send("Invalid role command. Use `!role create`, `!role delete`, `!role assign`, `!role unassign`, or `!role list`.")
+        await ctx.send("Invalid role command. Use `/role create`, `/role delete`, `/role assign`, `/role unassign`, or `/role list`.")
 
     @role.command()
     @owner_only()
