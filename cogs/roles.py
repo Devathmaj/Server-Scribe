@@ -49,7 +49,7 @@ class Roles(commands.Cog):
 
     @role.command()
     @owner_only()
-    async def create(self, ctx, name: str, *permissions):
+    async def create(self, ctx, name: str, permissions: str):
         """Creates a new role with specified permissions."""
         guild_id = str(ctx.guild.id)
         if guild_id not in self.roles:
@@ -59,9 +59,10 @@ class Roles(commands.Cog):
             await ctx.send(f"Role '{name}' already exists.")
             return
 
-        self.roles[guild_id]["roles"][name] = list(permissions)
+        permission_list = permissions.split()
+        self.roles[guild_id]["roles"][name] = permission_list
         self.save_roles()
-        await ctx.send(f"Role '{name}' created with permissions: {', '.join(permissions)}")
+        await ctx.send(f"Role '{name}' created with permissions: {', '.join(permission_list)}")
 
     @role.command()
     @owner_only()
