@@ -20,7 +20,19 @@ intents.members = True
 intents.message_content = True
 
 # Create bot instance
-bot = commands.Bot(command_prefix='!', intents=intents)
+class MyBot(commands.Bot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    async def is_owner(self, user):
+        if self.owner_id:
+            return user.id == self.owner_id
+        app_info = await self.application_info()
+        if app_info.team:
+            return user.id in [m.id for m in app_info.team.members]
+        return user.id == app_info.owner.id
+
+bot = MyBot(command_prefix='!', intents=intents)
 
 # --- EVENTS ---
 @bot.event

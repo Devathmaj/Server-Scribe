@@ -25,7 +25,7 @@ class Moderation(commands.Cog):
             await ctx.send("You don't have permission to do that!")
 
     @commands.hybrid_command()
-    @commands.has_permissions(ban_members=True)
+    @commands.check_any(commands.has_permissions(ban_members=True), commands.is_owner())
     async def ban(self, ctx, member: discord.Member, *, reason: str = "No reason provided"):
         """Bans a member from the server."""
         if member == self.bot.user:
